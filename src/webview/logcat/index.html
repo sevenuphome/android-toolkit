@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logcat</title>
+</head>
+<body>
+  <div id="toolbar">
+    <select id="level-filter">
+      <option value="V">Verbose</option>
+      <option value="D">Debug</option>
+      <option value="I" selected>Info</option>
+      <option value="W">Warn</option>
+      <option value="E">Error</option>
+    </select>
+    <input id="tag-filter" type="text" placeholder="Filter by tag...">
+    <input id="package-filter" type="text" placeholder="Filter by package...">
+    <input id="search-filter" type="text" placeholder="Search...">
+    <button id="clear-btn" title="Clear">Clear</button>
+    <button id="pause-btn" title="Pause/Resume">Pause</button>
+  </div>
+  <div id="log-container"></div>
+</body>
+</html>

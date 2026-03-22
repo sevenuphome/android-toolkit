@@ -1,0 +1,239 @@
+{
+  "name": "android-toolkit",
+  "displayName": "Android Toolkit",
+  "description": "Bring the essential Android Studio development loop to VS Code — Gradle builds, device management, and Logcat viewing.",
+  "version": "0.1.0",
+  "publisher": "sevenuphome",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "android",
+    "gradle",
+    "adb",
+    "emulator",
+    "logcat",
+    "kotlin",
+    "android studio",
+    "mobile",
+    "apk"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sevenuphome/android-toolkit"
+  },
+  "icon": "media/icon.png",
+  "activationEvents": [
+    "workspaceContains:**/build.gradle",
+    "workspaceContains:**/build.gradle.kts"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "android-toolkit",
+          "title": "Android Toolkit",
+          "icon": "media/android-toolkit.svg"
+        }
+      ]
+    },
+    "views": {
+      "android-toolkit": [
+        {
+          "id": "androidToolkit.gradleTasks",
+          "name": "Gradle Tasks"
+        },
+        {
+          "id": "androidToolkit.deviceManager",
+          "name": "Devices"
+        }
+      ],
+      "panel": [
+        {
+          "type": "webview",
+          "id": "androidToolkit.logcatView",
+          "name": "Logcat"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "androidToolkit.gradleTasks",
+        "contents": "No Gradle project detected.\n[Open Folder](command:vscode.openFolder)"
+      },
+      {
+        "view": "androidToolkit.deviceManager",
+        "contents": "No devices connected.\nConnect a device via USB or launch an emulator."
+      }
+    ],
+    "commands": [
+      {
+        "command": "androidToolkit.runGradleTask",
+        "title": "Run Gradle Task",
+        "category": "Android Toolkit",
+        "icon": "$(play)"
+      },
+      {
+        "command": "androidToolkit.refreshGradleTasks",
+        "title": "Refresh Gradle Tasks",
+        "category": "Android Toolkit",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "androidToolkit.stopGradleBuild",
+        "title": "Stop Gradle Build",
+        "category": "Android Toolkit",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "androidToolkit.refreshDevices",
+        "title": "Refresh Devices",
+        "category": "Android Toolkit",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "androidToolkit.selectDevice",
+        "title": "Select Device",
+        "category": "Android Toolkit"
+      },
+      {
+        "command": "androidToolkit.launchEmulator",
+        "title": "Launch Emulator",
+        "category": "Android Toolkit",
+        "icon": "$(play)"
+      },
+      {
+        "command": "androidToolkit.stopEmulator",
+        "title": "Stop Emulator",
+        "category": "Android Toolkit",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "androidToolkit.installApk",
+        "title": "Install APK",
+        "category": "Android Toolkit"
+      },
+      {
+        "command": "androidToolkit.showLogcat",
+        "title": "Show Logcat",
+        "category": "Android Toolkit"
+      },
+      {
+        "command": "androidToolkit.clearLogcat",
+        "title": "Clear Logcat",
+        "category": "Android Toolkit",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "androidToolkit.toggleLogcatPause",
+        "title": "Pause/Resume Logcat",
+        "category": "Android Toolkit",
+        "icon": "$(debug-pause)"
+      },
+      {
+        "command": "androidToolkit.buildAndRun",
+        "title": "Build and Run",
+        "category": "Android Toolkit",
+        "icon": "$(run-all)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "androidToolkit.refreshGradleTasks",
+          "when": "view == androidToolkit.gradleTasks",
+          "group": "navigation"
+        },
+        {
+          "command": "androidToolkit.refreshDevices",
+          "when": "view == androidToolkit.deviceManager",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "androidToolkit.runGradleTask",
+          "when": "view == androidToolkit.gradleTasks && viewItem == gradleTask",
+          "group": "inline"
+        },
+        {
+          "command": "androidToolkit.launchEmulator",
+          "when": "view == androidToolkit.deviceManager && viewItem == availableEmulator",
+          "group": "inline"
+        },
+        {
+          "command": "androidToolkit.stopEmulator",
+          "when": "view == androidToolkit.deviceManager && viewItem == runningEmulator",
+          "group": "inline"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Android Toolkit",
+      "properties": {
+        "androidToolkit.sdkPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to Android SDK. Auto-detected from ANDROID_HOME if empty."
+        },
+        "androidToolkit.javaHome": {
+          "type": "string",
+          "default": "",
+          "description": "Path to JDK. Auto-detected from JAVA_HOME if empty."
+        },
+        "androidToolkit.adbPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to ADB executable. Auto-detected from SDK if empty."
+        },
+        "androidToolkit.logcatBufferSize": {
+          "type": "number",
+          "default": 10000,
+          "description": "Maximum number of Logcat entries to keep in memory."
+        },
+        "androidToolkit.devicePollingInterval": {
+          "type": "number",
+          "default": 3000,
+          "description": "Device list polling interval in milliseconds."
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "androidToolkit.buildAndRun",
+        "key": "ctrl+f5",
+        "mac": "cmd+f5"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "node esbuild.mjs --production",
+    "watch": "node esbuild.mjs --watch",
+    "lint": "eslint src/",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "@vscode/vsce": "^3.0.0",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  },
+  "dependencies": {
+    "tree-kill": "^1.2.2"
+  }
+}
